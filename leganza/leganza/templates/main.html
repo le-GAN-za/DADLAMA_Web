@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel='stylesheet' type='text/css' href="{% static 'main.css' %}">
+</head>
+<body>
+{% include "navbar.html" %}
+<div class="container">
+    <div class="img_box">
+        <img src="{% static 'main01.jpeg' %}"/>
+        <b>저작권 Free!</b>
+        <p>License-Free
+            음원 기반으로
+            저작권을 걱정하지
+            않아도 됩니다!</p>
+    </div>
+    <div class="img_box">
+        <img src="{% static 'main02.jpg' %}"/>
+        <b>동영상을 분석!</b>
+        <p>등장인물들의 여러가지
+        특징을 파악하여
+        분위기를 분석합니다!</p>
+    </div>
+    <div class="img_box">
+        <img src="{% static 'main03.jpg' %}"/>
+        <b>감정을 분석!</b>
+        <p>등장인물들의 여러가지
+            특징을 파악하여
+            분위기를 분석합니다!</p>
+    </div>
+</div>
+<div class="center_box"><button onclick=window.location.href="{% url 'calc' %}" class="button" style="vertical-align:middle"><span>시작하기</span></button></div>
+
+</body>
+</html>

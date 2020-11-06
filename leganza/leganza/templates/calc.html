@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' type='text/css' href="{% static 'calc.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+{% include "navbar.html" %}
+    
+    <div class="center">
+    <div class="blank"></div>
+    <video controls width="50%" id="selVideo">
+
+    <source type="video/mp4">
+    <source type="video/webm">
+    <source type="video/ogg">
+
+    지원하지 않는 브라우저입니다. 다른 브라우저를 사용해 주세요.
+    </video>
+
+
+    <div id="selectBox">
+        {% comment %} <button class="uploadBtn">동영상 선택</button> {% endcomment %}
+        <button id='uploadBtn' onclick="triggerUploadFile()">동영상 선택</button>
+        <input id="uploadFile" type="file" accept="video/mp4,video/mkv, video/x-m4v,video/*", onchange="fileSelect()" style="display:none;">
+    </div>
+    <div id="progressBox">
+        <div id="myProgress">
+            <div id="myBar"></div>
+        </div>
+        <div class="progress">
+            <span id="per">0%</span>
+            <span id="calcDesc">설명..</span>
+            <span></span>
+        </div>
+    </div>
+    <div class="center_box"><button id="startCalc" onclick="start()" class="button" style="vertical-align:middle" disabled><span>분석하기</span></button></div>
+
+    </div>
+    <form method="POST" id="resultForm" style="display:none" action="/result/">
+    {% csrf_token %}
+        <input id="content" name="content" value="123123123"></input>
+    </form>
+</body>
+</html>
+
+<script>
+
+function start() {
+    let i = 0;
+    let elem = document.getElementById("myBar");
+    let progressBox = document.getElementById("progressBox");
+    let per = document.getElementById("per");
+    let btn = document.getElementById("startCalc");
+    let selVideo = document.getElementById("selVideo");
+    let uploadBtn = document.getElementById("uploadBtn");
+    uploadBtn.style.display = 'none';
+    progressBox.style.display = 'block'
+    btn.innerHTML = '변환중' + '<i class="fa fa-spinner fa-spin" disabled></i>'
+    btn.style.backgroundColor="gray"
+    btn.style.color='#004a00'
+    btn.disabled = true
+    let width = 1;
+    let id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+        let form = document.getElementById("resultForm");
+        form.submit();
+        
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        per.innerText = width + "%";
+      }
+    }
+}
+
+function fileSelect(){
+    let inputFile = document.getElementById("uploadFile");
+    let video = document.getElementById("selVideo");
+    let btn = document.getElementById("startCalc");
+    btn.disabled = false
+    let files = inputFile.files;
+    let videourl = URL.createObjectURL(inputFile.files[0]); 
+    video.setAttribute("src", videourl); 
+}
+function triggerUploadFile(){
+    let inputFile = document.getElementById("uploadFile");
+    inputFile.click();
+}
+</script>
