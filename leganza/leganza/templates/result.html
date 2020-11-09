@@ -10,30 +10,30 @@
 <body>
 {% include "navbar.html" %}
 <div class="justify-between">
-<div></div>
-<audio  controls>
+<audio id="audio">
     <source type="audio/wav">
-    <source src="{% static 'test.mp3' %}" type="audio/mpeg">
-    이 문장은 여러분의 브라우저가 audio 태그를 지원하지 않을 때 화면에 표시됩니다!
+    <source src="{% static 'rec0.mp3' %}" type="audio/mpeg">
 </audio>
-<button id="downloadBtn">음원 다운로드</button>
-<div></div>
+<div style="display:flex;justify-content:space-around;align-items:center;">
+<div id="musicName"></div>
+<div id="musicAuthor"></div>
+<div id="musicDesc" style="width:50%"></div>
+<a id="downloadBtn" style="text-decoration:none;" href="{% static 'rec0.mp3' %}" download>음원 다운로드</a>
+<button id="prev">prev</button>
+<button id="next">next</button>
+
+</div>
 </div>
 
 <div class="center">
 <video controls id="myVideo" ontimeupdate ="getCurVideoTime()">
-  <source src="{% static 'test.mp4' %}" type="video/mp4">
+  <source src="{% static 'test2.mp4' %}" type="video/mp4">
 </video>
 
-<div class="content">
+<div id="content">
 </div>
 <div id='spectrum'>
 <div id="videoLocator"></div>
-{% comment %} <div style="background-color:red"></div>
-<div style="background-color:blue"></div>
-<div style="background-color:black"></div>
-<div style="background-color:orange"></div>
-<div style="background-color:cyan"></div> {% endcomment %}
 </div>    
 <div id="labelBox">
 <div class="label">
@@ -68,16 +68,58 @@
 </div>
 </div>
 
-<input id="data" type="text" value="{{emotion}}" style="display:none;"/>
 </body>
 </html>
 
 
 <script>
+    let musicList = {{music|safe}}
+    let musicName = document.getElementById("musicName")
+    let musicAuthor = document.getElementById("musicAuthor")
+    let musicDesc = document.getElementById("musicDesc")
+    let audio = document.getElementById('audio');
+    audio.volume = 0.1
+    let video = document.getElementById('myVideo');
+    let musicDownloadBtn = document.getElementById('downloadBtn');
+
+
+    musicName.innerText = musicList[0][0];
+    musicAuthor.innerText = musicList[0][3];
+    musicDesc.innerText = musicList[0][2];
+
+    let nextBtn = document.getElementById('next')
+    let prevBtn = document.getElementById('prev')
+    let musicIdx = 0
+    function changeMusic(musicIdx){
+        audio.src = "/static/rec"+musicIdx + ".mp3"
+        musicDownloadBtn.href = "/static/rec"+musicIdx + ".mp3"
+        musicName.innerText = musicList[musicIdx][0]
+        musicAuthor.innerText = musicList[musicIdx][3];
+        musicDesc.innerText = musicList[musicIdx][2];
+        video.pause()
+        video.currentTime = 0;
+    }
+    nextBtn.onclick=function(){
+        musicIdx++;
+        if(musicIdx == musicList.length){
+            musicIdx = 0;
+        }
+        changeMusic(musicIdx)
+    }
+    prevBtn.onclick=function(){
+        musicIdx--;
+        if(musicIdx < 0){
+            musicIdx = musicList.length - 1;
+        }
+        changeMusic(musicIdx)
+    }
+
+
+
+
     let spectrum = document.getElementById('spectrum')
     let data = document.getElementById('data');
-    let arr = {{emotion}}
-    console.log(arr)
+    let arr = {{emotion|safe}}
     let emotionSpectrum = ''
     for(let i = 0 ; i < arr.length - 12 ; i+=10){
         let emotionColor = {'Anger' : 0, 'Disgust' : 0,'Fear' :0,'Happy' :0,'Neutral' : 0,'Sad' : 0, 'Surprise': 0}
@@ -97,12 +139,22 @@
     }
     spectrum.innerHTML += emotionSpectrum;
 
-    let video = document.getElementById('myVideo');
+
     let videoLoc = document.getElementById('videoLocator');
-function getCurVideoTime(){
-    videoLoc.style.left = (video.currentTime/video.duration*100) + "%"
-}
-spectrum.onclick = function(e){
+    let content = document.getElementById('content')
+
+    video.onplay = function(){
+        audio.play()
+    }
+    video.onpause = function(){
+        audio.pause()
+
+    }
+    function getCurVideoTime(){
+        videoLoc.style.left = (video.currentTime/video.duration*100) + "%"
+        content.innerText = arr[parseInt(video.currentTime/video.duration*arr.length)][1]
+    }
+    spectrum.onclick = function(e){
     video.currentTime = (e.layerX / spectrum.offsetWidth ) * video.duration 
 }
 </script>
