@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' type='text/css' href="{% static 'home.css' %}">
+
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    {% comment %} <div class='test' style="color:red">
+        김선일
+    </div>
+    <div class='test' style="color:cyan; left:5px">
+        김선일
+    </div> {% endcomment %}
+
+    <div class="center">
+        <div class="videoBox">
+            <div class="center" style='color:white; width:50%; font-size:1.5rem;margin-left:10%'>
+                ORIGINAL
+                <video id="origin" controls poster="{% static 'thumbnail.png'%}" style="width:70%; margin-top:2%">
+                    <source src="{% static 'origin.mp4'%}" type="video/mp4">
+                </video>
+                <p style="font-size:1rem; color:#404040;text-align: left;width:80%;margin-left:10%">
+                    ▶ 평범하지만 특별하게 ep.1
+                </p>
+            </div>
+            <div class="center" style='color:white; width:50%; font-size:1.5rem;margin-right:10%'>
+                OUR WORK
+                <video id="ouput" controls poster="{% static 'thumbnail.png'%}" style="width:70%;margin-top:2%">
+                    <source src="{% static 'output.mp4'%}" type="video/mp4">
+                </video>
+                <p style="font-size:1rem;color:black">
+                    ▶ 평범하지만 특별하게 ep.1
+                </p>
+            </div>
+
+        </div>
+        <div style="color:white; width:80%; margin-top:5%;">
+            설명이 들어갈 곳<br>
+            Avec la loi du 17 mai 2013 sur le mariage pour tous, la France est devenue le 9e pays européen et le 14e
+            pays au monde à autoriser le mariage homosexuel. Cette loi a ouvert de nouveaux droits pour le mariage,
+            l'adoption et la succession, au nom des principes d'égalité et de partage des libertés.
+
+        </div>
+        <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-top:10%; margin-bottom:5%">
+            <img id="botStartBtn" src="{% static 'startBtn.png'%}"></img>
+            <video id="botStartVideo" loop onclick="window.location.href='/calc'">
+                <source src="{% static 'startBtn.mp4'%}" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+
+    
+    let botStartBtn = document.getElementById("botStartBtn");
+    let botStartVideo = document.getElementById("botStartVideo");
+
+
+    botStartBtn.onmouseover = function () {
+        botStartBtn.style.visibility = 'hidden'
+        botStartVideo.style.visibility = 'visible'
+        botStartVideo.play();
+    }
+
+    botStartVideo.onmouseout = function () {
+        botStartBtn.style.visibility = 'visible'
+        botStartVideo.style.visibility = 'hidden'
+        botStartVideo.pause();
+    }
+
+
+</script>

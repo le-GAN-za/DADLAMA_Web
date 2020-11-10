@@ -87,3 +87,17 @@ img{
     opacity: 1;
     right: 0;
   }
+
+  #video{
+    width:100%; 
+    visibility:hidden; 
+    position:absolute;
+  }
+
+  #enterVideo{
+    width:23vw; 
+    visibility:hidden; 
+    position:absolute;
+    cursor: pointer;
+
+  }

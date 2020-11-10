@@ -1,0 +1,36 @@
+html, body{
+  height: 100%;
+}
+.center{
+  display: flex;
+  flex-direction : column;
+  align-items: center;
+}
+
+.videoBox{
+  display: flex;
+  justify-content: space-around;
+  width:100%;  
+  align-items: center;
+  margin-top: 5%;
+}
+
+.test{
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 700 ;
+  opacity: 0.5;
+}
+
+#botStartVideo{
+  width:17vw; 
+  visibility:hidden; 
+  position:absolute;
+  cursor: pointer;
+
+}
+
+#botStartBtn{
+  width:11vw;
+}
+

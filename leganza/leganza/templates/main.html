@@ -1,89 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+
     <link rel='stylesheet' type='text/css' href="{% static 'main.css' %}">
 </head>
+
 <body>
-{% comment %} {% include "navbar.html" %}
-<div class="container">
-    <div class="img_box">
-        <img src="{% static 'main01.jpeg' %}"/>
-        <b>저작권 Free!</b>
-        <p>License-Free
-            음원 기반으로
-            저작권을 걱정하지
-            않아도 됩니다!</p>
+    {% comment %} {% include "navbar.html" %}
+    <div class="container">
+        <div class="img_box">
+            <img src="{% static 'main01.jpeg' %}" />
+            <b>저작권 Free!</b>
+            <p>License-Free
+                음원 기반으로
+                저작권을 걱정하지
+                않아도 됩니다!</p>
+        </div>
+        <div class="img_box">
+            <img src="{% static 'main02.jpg' %}" />
+            <b>동영상을 분석!</b>
+            <p>등장인물들의 여러가지
+                특징을 파악하여
+                분위기를 분석합니다!</p>
+        </div>
+        <div class="img_box">
+            <img src="{% static 'main03.jpg' %}" />
+            <b>감정을 분석!</b>
+            <p>등장인물들의 여러가지
+                특징을 파악하여
+                분위기를 분석합니다!</p>
+        </div>
     </div>
-    <div class="img_box">
-        <img src="{% static 'main02.jpg' %}"/>
-        <b>동영상을 분석!</b>
-        <p>등장인물들의 여러가지
-        특징을 파악하여
-        분위기를 분석합니다!</p>
+    <div class="center_box"><button onclick=window.location.href="{% url 'calc' %}" class="button"
+            style="vertical-align:middle"><span>시작하기</span></button></div> {% endcomment %}
+
+    {% comment %} <iframe src="{% static 'silence.mp3'%}" allow="autoplay" id="audio" style="display:none"></iframe>
+    <audio id="audio" loop autoplay>
+        <source src="{% static 'intro950.mp4'%}">
+    </audio> {% endcomment %}
+
+
+
+    <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center">
+
+        <img id="enterBtn" src="{% static 'enter_button.png'%}" style="width:11vw"></img>
+        <video id="enterVideo" loop onclick="window.location.href='/calc'">
+            <source src="{% static 'enter.mp4'%}" type="video/mp4">
+        </video>
     </div>
-    <div class="img_box">
-        <img src="{% static 'main03.jpg' %}"/>
-        <b>감정을 분석!</b>
-        <p>등장인물들의 여러가지
-            특징을 파악하여
-            분위기를 분석합니다!</p>
-    </div>
-</div>
-<div class="center_box"><button onclick=window.location.href="{% url 'calc' %}" class="button" style="vertical-align:middle"><span>시작하기</span></button></div> {% endcomment %}
-
-{% comment %} <iframe src="{% static 'silence.mp3'%}" allow="autoplay" id="audio" style="display:none"></iframe>
-<audio id="audio" loop autoplay>
-<source src="{% static 'intro950.mp4'%}">
-</audio> {% endcomment %}
 
 
-  
- <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center"> 
-
-    <img id="enterBtn" src="{% static 'enter_button.png'%}"style="width:10%"></img>
-    <video id="enterVideo" loop  onclick="window.location.href='/calc'" style="width:20%; visibility:hidden; position:absolute;">
-    <source src="{% static 'enter.mp4'%}" type="video/mp4">
+    <video id="video"  onclick="window.location.href='/home'">
+        <source src="{% static 'intro950.mp4'%}" type="video/mp4">
     </video>
-</div>
-
-
-<video id="video"  style="width:100%; visibility:hidden; position:absolute;" onclick="window.location.href='/calc'">
-    <source src="{% static 'intro950.mp4'%}" type="video/mp4">
-</video>
 
 
 
 
 </body>
+
 </html>
 
 <script>
-    document.body.click()
     let enterBtn = document.getElementById("enterBtn")
     let enterVideo = document.getElementById("enterVideo")
     let video = document.getElementById("video")
-    
-    enterBtn.onmouseover = function(){
+
+    enterBtn.onmouseover = function () {
         enterBtn.style.visibility = 'hidden'
         enterVideo.style.visibility = 'visible'
         enterVideo.play();
     }
 
-    enterVideo.onmouseout = function(){
+    enterVideo.onmouseout = function () {
         enterBtn.style.visibility = 'visible'
         enterVideo.style.visibility = 'hidden'
         enterVideo.pause();
     }
 
-    enterVideo.onclick = function(){
+    enterVideo.onclick = function () {
         enterVideo.style.visibility = 'hidden'
         enterVideo.pause();
         video.style.visibility = 'visible'
         video.play();
     }
+
+    video.onended= function() {
+        window.location.href = '/home'
+    };
 </script>

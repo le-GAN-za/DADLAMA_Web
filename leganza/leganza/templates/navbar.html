@@ -2,17 +2,63 @@
 <html lang="en">
 <head>
     {% load static %}
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel='stylesheet' type='text/css' href="{% static 'navbar.css' %}">
 </head>
 <body>
+<div class="center">
+<video id="logoVideo" autoplay muted loop onclick=window.location.href='/'>
+    <source src="{% static 'menuLogo.mp4'%}" type="video/mp4">
+</video>
+</div>
+
 <ul>
-  <li><a href="{% url 'main' %}">Main</a></li>
-  <li><a href="{% url 'calc' %}">Calc</a></li>
-  <li><a href="{% url 'result' %}">Result</a></li>
-  <li><a href="{% url 'about' %}">About</a></li>
+  <li id="homeBtn"><a href="{% url 'home' %}"><img id="homeImg" src="{% static 'home.png'%}"></img></a></li>
+  <li id="startBtn"><a href="{% url 'calc' %}"><img  id="startImg" src="{% static 'start.png'%}"></img></a></li>
+  <li id="aboutBtn"><a href="{% url 'about' %}"><img  id="aboutImg" src="{% static 'about.png'%}" style="overflow:visible;"></img></a>
+    <ul style="flex-direction:column;align-items:centeroverflow:visible;position:absolute;">
+    <li style="display:flex;justify-content:center;">
+    <img src="{% static 'leganzaLogo.png'%}"></img>
+    </li>
+    <li style="display:flex;justify-content:center;height:10vw">
+    <img src="{% static 'dramaLogo.png'%}">
+    </li>
+    </ul>
+  </li>
 </ul>
 </body>
 </html>
+
+<script>
+  let homeBtn = document.getElementById("homeBtn")
+  let startBtn = document.getElementById("startBtn")
+  let aboutBtn = document.getElementById("aboutBtn")
+  let aboutImg = document.getElementById("aboutImg")
+  let startImg = document.getElementById("startImg")
+  let homeImg = document.getElementById("homeImg")
+
+
+  homeBtn.onmouseover = function(){
+    homeImg.src = "/static/home.gif"
+  }
+  homeBtn.onmouseout = function(){
+    homeImg.src = "/static/home.png"
+  }
+
+  startBtn.onmouseover = function(){
+    startImg.src = "/static/start.gif"
+  }
+  startBtn.onmouseout = function(){
+    startImg.src = "/static/start.png"
+  }
+
+  aboutBtn.onmouseover = function(){
+    aboutImg.src = "/static/about.gif"
+  }
+  aboutBtn.onmouseout = function(){
+    aboutImg.src = "/static/about.png"
+  }
+</script>

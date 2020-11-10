@@ -13,5 +13,7 @@ def result(request) :
     emotionArr = json.loads(emotionArr)
     musicList = leganza.musicDownloader.getMusics(emotionArr[-8][0])
     return render(request, 'result.html', {'emotion' : json.dumps(emotionArr),'music' : json.dumps(musicList)})
+def home(request) :
+    return render(request, 'home.html')
 def about(request) :
     return render(request, 'about.html')
