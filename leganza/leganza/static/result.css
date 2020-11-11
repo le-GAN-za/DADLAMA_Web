@@ -28,9 +28,14 @@
   flex-direction : column;
   align-items: center;
 }
-
+.centerRes{
+  margin-top : 5%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 #myVideo {
-  width: 70vw;
+  width: 50vw;
   /* min-height: 20vw; */
 }
 
@@ -39,7 +44,7 @@
   background: rgba(0, 0, 0, 0.5);
   color: #f1f1f1;
   height: 20px;
-  width: 70vw;
+  width: 50vw;
 }
 
 /* Style the button used to pause/play the video */
@@ -62,8 +67,10 @@
   position: relative;
   display: flex;
   justify-content: stretch ;
-  width: 70vw;  
+  width: 50vw;  
   z-index: 999;
+  border: 1px solid white;
+
 }
 
 #spectrum> div{
@@ -80,35 +87,41 @@
   left: 0%
 }
 #labelBox{
-  width:70vw;
+  width:50vw;
   display: flex;
   justify-content: space-between;
+  border: 2px solid white;;
 }
 
 .Anger{
   background-color: red;
 }
 .Disgust{
-  background-color: brown;
+  background-color: greenyellow;
 }
 .Fear{
-  background-color: Purple;
+  background-color: gray;
 }
 .Happy{
-  background-color: Yellow;
+  background-color: hotpink;
 }
 .Neutral{
-  background-color: Gray;
+  background-color: white;
 }
 .Sad{
-  background-color: Blue;
+  background-color: purple;
 }
 .Surprise{
-  background-color: Cyan;
+  background-color: orangered;
 }
+label{
+  padding-left: 5px;
+  color: white;
 
+}
 .label{
   display: flex;
+
 }
 
 .label>div{

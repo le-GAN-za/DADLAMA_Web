@@ -21,13 +21,13 @@
         <video id="loadingVideo" loop autoplay style="width:20%;display:none;position:fixed">
             <source src="{% static 'loading.mp4'%}" type="video/mp4">
         </video>
-        <input id="uploadFile" type="file" accept="video/mp4,video/mkv, video/x-m4v,video/*", onchange="fileSelect()" style="display:none;">
 
 
     </div>
-    <form method="POST" id="resultForm" style="display:none" action="/result/">
+    <form method="POST" id="resultForm" style="display:none" action="/result/"  enctype="multipart/form-data">
     {% csrf_token %}
-        <input id="content" name="content" value="123123123"></input>
+        <input id="uploadFile" type="file" name="video" accept="video/mp4,video/mkv, video/x-m4v,video/*", onchange="fileSelect()" style="display:none;">
+
     </form>
 </body>
 </html>
@@ -56,12 +56,13 @@ function fileSelect(){
 
     window.scrollTo({top:logoHeight, behavior:'smooth'});   
 
+    let form = document.getElementById("resultForm");
+    form.submit();
 }
 function triggerUploadFile(){
     let inputFile = document.getElementById("uploadFile");
     uploadVideo.pause();
     loadingVideo.play();
-
     inputFile.click();
 }
 </script>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,73 +8,99 @@
     {% load static %}
     <link rel='stylesheet' type='text/css' href="{% static 'result.css' %}">
 </head>
+
 <body>
-{% include "navbar.html" %}
-<div class="justify-between">
-<audio id="audio">
-    <source type="audio/wav">
-    <source src="{% static 'rec0.mp3' %}" type="audio/mpeg">
-</audio>
-<div style="display:flex;justify-content:space-around;align-items:center;">
-<div id="musicName"></div>
-<div id="musicAuthor"></div>
-<div id="musicDesc" style="width:50%"></div>
-<a id="downloadBtn" style="text-decoration:none;" href="{% static 'rec0.mp3' %}" download>음원 다운로드</a>
-<button id="prev">prev</button>
-<button id="next">next</button>
+    {% include "navbar.html" %}
 
-</div>
-</div>
+    <div class="centerRes">
+        <div class="center" style="width:50%;margin-left:5%">
+            <video controls id="myVideo">
+                <source src="{% static 'video.mp4' %}" type="video/mp4">
+            </video>
 
-<div class="center">
-<video controls id="myVideo" ontimeupdate ="getCurVideoTime()">
-  <source src="{% static 'test2.mp4' %}" type="video/mp4">
-</video>
+            <div id="content">
+            </div>
+            <div id='spectrum'>
+                <div id="videoLocator"></div>
+            </div>
+            <div id="labelBox">
+                <div class="label">
+                    <div class="Anger"></div>
+                    <label>Anger</label>
+                </div>
+                <div class="label">
+                    <div class="Sad"></div>
+                    <label>Sad</label>
+                </div>
+                <div class="label">
+                    <div class="Disgust"></div>
+                    <label>Disgust</label>
+                </div>
+                <div class="label">
+                    <div class="Neutral"></div>
+                    <label>Neutral</label>
+                </div>
+                <div class="label">
+                    <div class="Fear"></div>
+                    <label>Fear</label>
+                </div>
+                <div class="label">
+                    <div class="Surprise"></div>
+                    <label>Surprise</label>
+                </div>
+                <div class="label">
+                    <div class="Happy"></div>
+                    <label>Happy</label>
+                </div>
+            </div>
+        </div>
 
-<div id="content">
-</div>
-<div id='spectrum'>
-<div id="videoLocator"></div>
-</div>    
-<div id="labelBox">
-<div class="label">
-<div class="Anger"></div>
-<label>Anger</label>
-</div>
-<div class="label">
-<div class="Sad"></div>
-<label>Sad</label>
-</div>
-<div class="label">
-<div class="Disgust"></div>
-<label>Disgust</label>
-</div>
-<div class="label">
-<div class="Neutral"></div>
-<label>Neutral</label>
-</div>
-<div class="label">
-<div class="Fear"></div>
-<label>Fear</label>
-</div>
-<div class="label">
-<div class="Surprise"></div>
-<label>Surprise</label>
-</div>
-<div class="label">
-<div class="Happy"></div>
-<label>Happy</label>
-</div>
+        <div style="width:50% ;border-left : 1px solid white; margin-left: 5%;margin-right: 5%;">
 
-</div>
-</div>
+            <audio id="audio" style="display:none;">
+                <source src="{% static 'rec0.mp3' %}" type="audio/mpeg">
+            </audio>
+            <div style="display:flex; flex-direction: column; align-items: center;margin-left: 5%;">
+
+                <div style="display: flex; justify-content: space-between; width:100%">
+                    <div style="color:white; font-size:2rem">RESULT</div>
+                    <div> </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; width:100%">
+
+                    <div></div>
+                    <div style="color:white">Happy</div>
+                    <div></div>
+                </div>
+                <hr style="width: 100%;margin-left: -5%;padding-right:5%">
+                <div style="display: flex; justify-content: space-between; width:100%;font-size: 1.5rem;">
+                    <div style="color:white;display:flex;align-items: center;">BGM</div>
+                    <a id="downloadBtn" style="text-decoration:none;color:white" href="{% static 'rec0.mp3' %}"
+                        download>download</a>
+                </div>
+                <div style="display: flex; justify-content: space-between; width:100%;font-size: 1.5rem;">
+                    <div style="color:white;">Title</div>
+                    <div id="musicName" style="color:white">흙백의 꽃</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; width:100%;font-size: 1.5rem;">
+                    <div style="color:white">Artist</div>
+                    <div id="musicAuthor" style="color:white">김태현</div>
+                </div>
+                <br>
+                <button id="nextBtn" style="border-radius: 100%;width:5vw;height: 5vw;"><img src="{%static 'next.png'%}"></button>
+
+            </div>
+        </div>
+    </div>
 
 </body>
+
 </html>
 
 
 <script>
-    let musicList = {{music|safe}}
+
+    let musicList = {{ music| safe}}
     let musicName = document.getElementById("musicName")
     let musicAuthor = document.getElementById("musicAuthor")
     let musicDesc = document.getElementById("musicDesc")
@@ -81,35 +108,24 @@
     audio.volume = 0.1
     let video = document.getElementById('myVideo');
     let musicDownloadBtn = document.getElementById('downloadBtn');
-
+    let nextBtn = document.getElementById('nextBtn');
 
     musicName.innerText = musicList[0][0];
     musicAuthor.innerText = musicList[0][3];
-    musicDesc.innerText = musicList[0][2];
 
-    let nextBtn = document.getElementById('next')
-    let prevBtn = document.getElementById('prev')
     let musicIdx = 0
-    function changeMusic(musicIdx){
-        audio.src = "/static/rec"+musicIdx + ".mp3"
-        musicDownloadBtn.href = "/static/rec"+musicIdx + ".mp3"
+    function changeMusic(musicIdx) {
+        audio.src = "/static/rec" + musicIdx + ".mp3"
+        musicDownloadBtn.href = "/static/rec" + musicIdx + ".mp3"
         musicName.innerText = musicList[musicIdx][0]
         musicAuthor.innerText = musicList[musicIdx][3];
-        musicDesc.innerText = musicList[musicIdx][2];
         video.pause()
         video.currentTime = 0;
     }
-    nextBtn.onclick=function(){
+    nextBtn.onclick = function () {
         musicIdx++;
-        if(musicIdx == musicList.length){
+        if (musicIdx == musicList.length) {
             musicIdx = 0;
-        }
-        changeMusic(musicIdx)
-    }
-    prevBtn.onclick=function(){
-        musicIdx--;
-        if(musicIdx < 0){
-            musicIdx = musicList.length - 1;
         }
         changeMusic(musicIdx)
     }
@@ -119,42 +135,45 @@
 
     let spectrum = document.getElementById('spectrum')
     let data = document.getElementById('data');
-    let arr = {{emotion|safe}}
+    let arr = {{ emotion| safe}}
     let emotionSpectrum = ''
-    for(let i = 0 ; i < arr.length - 12 ; i+=10){
-        let emotionColor = {'Anger' : 0, 'Disgust' : 0,'Fear' :0,'Happy' :0,'Neutral' : 0,'Sad' : 0, 'Surprise': 0}
-        for(let j = 0 ; j < 10 ; j++ ){
-            emotionColor[arr[i+j][1]]++;
+    for (let i = 0; i < arr.length - 12; i += 10) {
+        let emotionColor = { 'Anger': 0, 'Disgust': 0, 'Fear': 0, 'Happy': 0, 'Neutral': 0, 'Sad': 0, 'Surprise': 0 }
+        for (let j = 0; j < 10; j++) {
+            emotionColor[arr[i + j][1]]++;
         }
         let max = 0;
         let maxEmotion = 0;
-        for(let j in emotionColor){
-            if(emotionColor[j] > max){
+        for (let j in emotionColor) {
+            if (emotionColor[j] > max) {
                 max = emotionColor[j];
                 maxEmotion = j;
             }
         }
         let color = maxEmotion
-        emotionSpectrum += "<div class=\""+ color+"   \"></div>"
+        emotionSpectrum += "<div class=\"" + color + "   \"></div>"
     }
     spectrum.innerHTML += emotionSpectrum;
 
 
     let videoLoc = document.getElementById('videoLocator');
     let content = document.getElementById('content')
-
-    video.onplay = function(){
+    video.ontimeupdate=function(){getCurVideoTime();}
+    video.onplay = function () {
         audio.play()
     }
-    video.onpause = function(){
+    video.onpause = function () {
         audio.pause()
 
     }
-    function getCurVideoTime(){
-        videoLoc.style.left = (video.currentTime/video.duration*100) + "%"
-        content.innerText = arr[parseInt(video.currentTime/video.duration*arr.length)][1]
+    function getCurVideoTime() {
+        videoLoc.style.left = (video.currentTime / video.duration * 100) + "%"
+        content.innerText = arr[parseInt(video.currentTime / video.duration * arr.length)][1]
     }
-    spectrum.onclick = function(e){
-    video.currentTime = (e.layerX / spectrum.offsetWidth ) * video.duration 
-}
+    spectrum.onclick = function (e) {
+        video.currentTime = (e.layerX / spectrum.offsetWidth) * video.duration
+    }
+
+
+
 </script>
